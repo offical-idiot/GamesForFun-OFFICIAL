@@ -92,7 +92,7 @@
             background-color: #f0f0f0;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            display: none;
+            display: block;
         }
         .notification-title {
             font-size: 22px;
@@ -239,8 +239,6 @@
             newNotification.className = "notification-item";
             newNotification.textContent = message;
             notificationDiv.appendChild(newNotification);
-
-            document.getElementById("notification-container").style.display = "block";  // Show the notification container
         }
     </script>
 
