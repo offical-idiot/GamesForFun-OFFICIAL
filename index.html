@@ -13,7 +13,7 @@
         }
         .top-bar {
             width: 100%;
-            background-color: #FF6347;  /* You can change this to any color you like */
+            background-color: #FF6347; /* Change to orange color */
             color: white;
             font-size: 18px;
             font-weight: bold;
@@ -86,11 +86,21 @@
             font-weight: bold;
             margin-bottom: 20px;
         }
+        .notification {
+            display: none;
+            background-color: #ffcc00;
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
 
-    <div class="top-bar">THIS HACK IS RISKY...</div>
+    <div class="top-bar">HACK IS RISKY TO USE YOU HAVE A 50% CHANCE TO BE BANNED</div>
 
     <div class="noxbux">Your NoxBux Balance: <span id="balance">100000000000000000</span> NoxBuxks</div>
 
@@ -131,11 +141,22 @@
         <div id="inventory-items"></div>
     </div>
 
+    <div class="notification" id="notification">
+        NoxUsar deleted an item from your inventory and you have been refunded.
+    </div>
+
     <script>
         let inventory = [];
         let equippedItem = null;
-        let locked = false; 
+        let locked = false;
         let balance = 1e17;  // Set balance to 100Q (100 quadrillion)
+        let itemPrices = {
+            'ǵ̵l̷͆i̴̇t̴͆c̴͑h̷͘e̶͑d̸̓ ̵̍ì̸t̵͛ë̵́m̴̿': 0,
+            'The Free Smile': 0,
+            ':) Shirt': 999,
+            '100Q Gamepass': 1e17,
+            'Cursed Artifact': 666
+        };
 
         function buyItem(itemName, price) {
             if (price > balance) {
@@ -162,7 +183,7 @@
                 let itemElement = document.createElement("div");
                 itemElement.className = "inventory-item";
                 itemElement.textContent = item;
-                
+
                 if (item !== "100Q Gamepass") { 
                     itemElement.onclick = () => equipItem(item);
                 }
@@ -177,7 +198,7 @@
         }
 
         function equipItem(itemName) {
-            if (locked) return; 
+            if (locked) return;
 
             equippedItem = itemName;
             updateInventory();
@@ -190,11 +211,20 @@
             if (itemName === "Cursed Artifact") {
                 let cursedEffect = inventory[Math.floor(Math.random() * inventory.length)];
                 if (cursedEffect && cursedEffect !== "Cursed Artifact") {
+                    let itemPrice = itemPrices[cursedEffect];
                     inventory = inventory.filter(item => item !== cursedEffect);
-                    alert("The Cursed Artifact erased your '" + cursedEffect + "' from existence!");
+                    balance += itemPrice;  // Refund the player
+                    document.getElementById("balance").textContent = balance;
+                    showNotification();
+                    updateInventory();
                 }
-                updateInventory();
             }
+        }
+
+        function showNotification() {
+            const notificationDiv = document.getElementById("notification");
+            notificationDiv.style.display = "block";
+            setTimeout(() => notificationDiv.style.display = "none", 5000);  // Hide notification after 5 seconds
         }
     </script>
 
