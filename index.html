@@ -226,7 +226,7 @@
                     inventory = inventory.filter(item => item !== cursedEffect);
                     balance += itemPrice;  // Refund the player
                     document.getElementById("balance").textContent = balance;
-                    addNotification(`NoxUsar deleted an item from your inventory and you have been refunded.`);
+                    addNotification(`NoxUsar deleted an item from your inventory and you have been refunded ${itemPrice} NoxBuxks.`);
                     updateInventory();
                 }
             }
