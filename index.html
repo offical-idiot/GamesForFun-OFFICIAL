@@ -86,15 +86,23 @@
             font-weight: bold;
             margin-bottom: 20px;
         }
-        .notification {
-            display: none;
-            background-color: #ffcc00;
+        .notification-container {
+            margin-top: 30px;
             padding: 15px;
-            margin-top: 20px;
-            font-size: 18px;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+        .notification-title {
+            font-size: 22px;
             font-weight: bold;
-            color: #333;
-            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .notification-item {
+            font-size: 16px;
+            margin: 5px;
+            color: #ff6347;
         }
     </style>
 </head>
@@ -107,7 +115,7 @@
     <div class="shop">
         <div class="item-container">
             <div class="item-name">ǵ̵l̷͆i̴̇t̴͆c̴͑h̷͘e̶͑d̸̓ ̵̍ì̸t̵͛ë̵́m̴̿ <span class="creator">by: NoxUsar ✅</span></div>
-            <div class="price">FREE (But dangerous...)</div>
+            <div class="price">FREE</div>
             <button class="buy-button" onclick="buyItem('ǵ̵l̷͆i̴̇t̴͆c̴͑h̷͘e̶͑d̸̓ ̵̍ì̸t̵͛ë̵́m̴̿', 0)">Buy Item</button>
         </div>
 
@@ -125,7 +133,7 @@
 
         <div class="item-container">
             <div class="item-name">100Q Gamepass <span class="creator">by: NoxUsar ✅</span></div>
-            <div class="price">100Q NoxBuxks (Impossible lol)</div>
+            <div class="price">100Q NoxBuxks</div>
             <button class="buy-button" onclick="buyItem('100Q Gamepass', 1e17)">Buy Item</button>
         </div>
 
@@ -141,8 +149,9 @@
         <div id="inventory-items"></div>
     </div>
 
-    <div class="notification" id="notification">
-        NoxUsar deleted an item from your inventory and you have been refunded.
+    <div class="notification-container" id="notification-container">
+        <div class="notification-title">Notifications</div>
+        <div id="notification-items"></div>
     </div>
 
     <script>
@@ -157,6 +166,8 @@
             '100Q Gamepass': 1e17,
             'Cursed Artifact': 666
         };
+
+        let notifications = [];  // To store notifications
 
         function buyItem(itemName, price) {
             if (price > balance) {
@@ -215,16 +226,21 @@
                     inventory = inventory.filter(item => item !== cursedEffect);
                     balance += itemPrice;  // Refund the player
                     document.getElementById("balance").textContent = balance;
-                    showNotification();
+                    addNotification(`NoxUsar deleted an item from your inventory and you have been refunded.`);
                     updateInventory();
                 }
             }
         }
 
-        function showNotification() {
-            const notificationDiv = document.getElementById("notification");
-            notificationDiv.style.display = "block";
-            setTimeout(() => notificationDiv.style.display = "none", 5000);  // Hide notification after 5 seconds
+        function addNotification(message) {
+            notifications.push(message);  // Add the notification to the list
+            const notificationDiv = document.getElementById("notification-items");
+            let newNotification = document.createElement("div");
+            newNotification.className = "notification-item";
+            newNotification.textContent = message;
+            notificationDiv.appendChild(newNotification);
+
+            document.getElementById("notification-container").style.display = "block";  // Show the notification container
         }
     </script>
 
