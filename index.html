@@ -1,246 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NoxUsar's Item Shop</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 50px;
-            background-color: #f2f2f2;
-        }
-        .top-bar {
-            width: 100%;
-            background-color: #FF6347; /* Change to orange color */
-            color: white;
-            font-size: 18px;
-            font-weight: bold;
-            padding: 10px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 100;
-        }
-        .shop {
-            margin-top: 80px;
-        }
-        .item-container {
-            display: inline-block;
-            padding: 20px;
-            border: 2px solid #000;
-            border-radius: 10px;
-            background-color: #f9f9f9;
-            margin-bottom: 20px;
-        }
-        .item-name {
-            font-size: 20px;
-            font-weight: bold;
-        }
-        .creator {
-            font-size: 16px;
-            color: #555;
-        }
-        .price {
-            font-size: 16px;
-            color: darkblue;
-            font-weight: bold;
-        }
-        .buy-button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: green;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            margin-top: 10px;
-        }
-        .inventory {
-            margin-top: 30px;
-            padding: 15px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            display: none;
-        }
-        .inventory-title {
-            font-size: 22px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        .inventory-item {
-            font-size: 18px;
-            margin: 5px;
-            cursor: pointer;
-            color: blue;
-            text-decoration: underline;
-        }
-        .equipped {
-            font-weight: bold;
-            color: red;
-        }
-        .noxbux {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-        .notification-container {
-            margin-top: 30px;
-            padding: 15px;
-            background-color: #f0f0f0;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            display: block;
-        }
-        .notification-title {
-            font-size: 22px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        .notification-item {
-            font-size: 16px;
-            margin: 5px;
-            color: #ff6347;
-        }
-    </style>
+  <title>Gorilla Tag Clone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body { margin: 0; overflow: hidden; background: #000; }
+    canvas { display: block; }
+
+    #startBtn {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      background: #222;
+      color: white;
+      font-size: 20px;
+      padding: 15px 30px;
+      cursor: pointer;
+      border-radius: 8px;
+      z-index: 10;
+    }
+  </style>
 </head>
 <body>
-
-    <div class="top-bar">HACK IS RISKY TO USE YOU HAVE A 50% CHANCE TO BE BANNED</div>
-
-    <div class="noxbux">Your NoxBux Balance: <span id="balance">100000000000000000</span> NoxBuxks</div>
-
-    <div class="shop">
-        <div class="item-container">
-            <div class="item-name">ǵ̵l̷͆i̴̇t̴͆c̴͑h̷͘e̶͑d̸̓ ̵̍ì̸t̵͛ë̵́m̴̿ <span class="creator">by: I HACKED NoxUsar ✅</span></div>
-            <div class="price">FREE</div>
-            <button class="buy-button" onclick="buyItem('ǵ̵l̷͆i̴̇t̴͆c̴͑h̷͘e̶͑d̸̓ ̵̍ì̸t̵͛ë̵́m̴̿', 0)">Buy Item</button>
-        </div>
-
-        <div class="item-container">
-            <div class="item-name">The Free Smile <span class="creator">by: I HACKED NoxUsar ✅</span></div>
-            <div class="price">FREE</div>
-            <button class="buy-button" onclick="buyItem('The Free Smile', 0)">Buy Item</button>
-        </div>
-
-        <div class="item-container">
-            <div class="item-name">:) Shirt <span class="creator">by: I HACKED NoxUsar ✅</span></div>
-            <div class="price">999 NoxBuxks</div>
-            <button class="buy-button" onclick="buyItem(':) Shirt', 999)">Buy Item</button>
-        </div>
-
-        <div class="item-container">
-            <div class="item-name">100Q Gamepass <span class="creator">by: I HACKED NoxUsar ✅</span></div>
-            <div class="price">100Q NoxBuxks</div>
-            <button class="buy-button" onclick="buyItem('100Q Gamepass', 1e17)">Buy Item</button>
-        </div>
-
-        <div class="item-container">
-            <div class="item-name">Cursed Artifact <span class="creator">by: ❌ [ BANNED USER ]</span></div>
-            <div class="price">666 NoxBuxks</div>
-            <button class="buy-button" onclick="buyItem('Cursed Artifact', 666)">Buy Item</button>
-        </div>
-    </div>
-
-    <div class="inventory" id="inventory">
-        <div class="inventory-title">Your Inventory</div>
-        <div id="inventory-items"></div>
-    </div>
-
-    <div class="notification-container" id="notification-container">
-        <div class="notification-title">Notifications</div>
-        <div id="notification-items"></div>
-    </div>
-
-    <script>
-        let inventory = [];
-        let equippedItem = null;
-        let locked = false;
-        let balance = 1e17;  // Set balance to 100Q (100 quadrillion)
-        let itemPrices = {
-            'ǵ̵l̷͆i̴̇t̴͆c̴͑h̷͘e̶͑d̸̓ ̵̍ì̸t̵͛ë̵́m̴̿': 0,
-            'The Free Smile': 0,
-            ':) Shirt': 999,
-            '100Q Gamepass': 1e17,
-            'Cursed Artifact': 666
-        };
-
-        let notifications = [];  // To store notifications
-
-        function buyItem(itemName, price) {
-            if (price > balance) {
-                alert("You don't have enough NoxBuxks!");
-                return;
-            }
-
-            if (!inventory.includes(itemName)) {
-                inventory.push(itemName);
-                balance -= price;
-                document.getElementById("balance").textContent = balance;
-                updateInventory();
-            }
-        }
-
-        function updateInventory() {
-            const inventoryDiv = document.getElementById("inventory");
-            const itemsDiv = document.getElementById("inventory-items");
-
-            itemsDiv.innerHTML = "";
-            inventoryDiv.style.display = "block"; 
-
-            inventory.forEach(item => {
-                let itemElement = document.createElement("div");
-                itemElement.className = "inventory-item";
-                itemElement.textContent = item;
-
-                if (item !== "100Q Gamepass") { 
-                    itemElement.onclick = () => equipItem(item);
-                }
-
-                if (item === equippedItem) {
-                    itemElement.classList.add("equipped");
-                    itemElement.textContent += " (Equipped)";
-                }
-
-                itemsDiv.appendChild(itemElement);
-            });
-        }
-
-        function equipItem(itemName) {
-            if (locked) return;
-
-            equippedItem = itemName;
-            updateInventory();
-
-            if (itemName === "ǵ̵l̷͆i̴̇t̴͆c̴͑h̷͘e̶͑d̸̓ ̵̍ì̸t̵͛ë̵́m̴̿") {
-                locked = true;
-                alert("You are now stuck with the glitched item FOREVER.");
-            }
-
-            if (itemName === "Cursed Artifact") {
-                let cursedEffect = inventory[Math.floor(Math.random() * inventory.length)];
-                if (cursedEffect && cursedEffect !== "Cursed Artifact") {
-                    let itemPrice = itemPrices[cursedEffect];
-                    inventory = inventory.filter(item => item !== cursedEffect);
-                    balance += itemPrice;  // Refund the player
-                    document.getElementById("balance").textContent = balance;
-                    addNotification(`NoxUsar deleted an item from your inventory and you have been refunded ${itemPrice} NoxBuxks.`);
-                    updateInventory();
-                }
-            }
-        }
-
-        function addNotification(message) {
-            notifications.push(message);  // Add the notification to the list
-            const notificationDiv = document.getElementById("notification-items");
-            let newNotification = document.createElement("div");
-            newNotification.className = "notification-item";
-            newNotification.textContent = message;
-            notificationDiv.appendChild(newNotification);
-        }
-    </script>
-
+  <div id="startBtn">Click to Start</div>
+  <script type="module" src="index.js"></script>
 </body>
 </html>
